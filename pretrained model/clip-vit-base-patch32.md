@@ -3,12 +3,13 @@ CLIP（Contrastive Language-Image Pre-training）模型是由OpenAI在2021年提
 该模型通过对比学习的方式，将图像和文本映射到同一个嵌入空间中，使得相关联的图像和文本在向量空间中彼此接近。
 hugging face网址：https://huggingface.co/openai/clip-vit-base-patch32
 # 所需文件：
-！请将下述文件下载于用一个文件夹路径下
+！请将下述文件下载于用一个文件夹路径下 
+
 config.json  
 
 preprocessor_config.json  
 
-pytorch_model.bin 主要权重文件 
+pytorch_model.bin (主要权重文件) 
 
 tokenizer.json  
 
