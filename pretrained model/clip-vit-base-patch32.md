@@ -18,3 +18,8 @@ vocab.json
 clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32") 
 clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32") 
 请将上述文件路径替换为下载后的文件夹所在路径
+
+# 报错
+- 替换前报错（由于无法翻墙访问huggingface导致）
+OSError: We couldn't connect to 'https://huggingface.co' to load this file, couldn't find it in the cached files and it looks like openai/clip-vit-base-patch32 is not the path to a directory containing a file named config.json.
+Checkout your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.
