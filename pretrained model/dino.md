@@ -7,7 +7,7 @@ hugging face网址：https://huggingface.co/facebook/dino-vitb16/tree/main
 - 原调用dino_model = vit_base_patch16_224_dino(pretrained=True)
 - 替换为：
   - dino_model = vit_base_patch16_224_dino(pretrained=False)
-  - state_dict = torch.load('path_to_bin')
+  - state_dict = torch.load('path_to_bin', weights_only=True)
   - dino_model.load_state_dict(state_dict)
   - dino_model.eval()
 # 报错
