@@ -10,6 +10,11 @@ hugging face网址：https://huggingface.co/facebook/dino-vitb16/tree/main
   - state_dict = torch.load('path_to_bin', weights_only=True)
   - dino_model.load_state_dict(state_dict)
   - dino_model.eval()
+ 
+# 警告
+- 没有找到妥善的方式解决警告：UserWarning: Mapping deprecated model name vit_base_patch16_224_dino to current vit_base_patch16_224.dino.
+  dino_model = vit_base_patch16_224_dino(pretrained=False) 
+  
 # 报错
 - 替换前报错（无法连接hf）
 raise LocalEntryNotFoundError(
