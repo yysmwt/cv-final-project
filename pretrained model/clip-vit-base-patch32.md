@@ -4,10 +4,14 @@ CLIP（Contrastive Language-Image Pre-training）模型是由OpenAI在2021年提
 hugging face网址：https://huggingface.co/openai/clip-vit-base-patch32
 # 所需文件：
 ！请将下述文件下载于用一个文件夹路径下
-config.json 
-preprocessor_config.json 
-pytorch_model.bin 主要权重文件
-tokenizer.json 
+config.json  
+
+preprocessor_config.json  
+
+pytorch_model.bin 主要权重文件 
+
+tokenizer.json  
+
 vocab.json
 # 调用方式
 clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32") 
