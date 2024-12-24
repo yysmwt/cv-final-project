@@ -5,15 +5,16 @@ hugging face网址：https://huggingface.co/openai/clip-vit-base-patch32
 # 所需文件：
 ！请将下述文件下载于用一个文件夹路径下 
 
-config.json  
+- config.json  
 
-preprocessor_config.json  
+- preprocessor_config.json  
 
-pytorch_model.bin (主要权重文件) 
+- pytorch_model.bin (主要权重文件) 
 
-tokenizer.json  
+- tokenizer.json  
 
-vocab.json
+- vocab.json
+  
 # 调用方式
 clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32") 
 clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32") 
