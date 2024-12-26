@@ -115,7 +115,7 @@ label_b = NegativeLabel(prompt_b,negative_prompt)
 
 #Image Parametrization and Initialization (this section takes vram)
 
-#Select Learnable Image Size (this has big VRAM implications!):
+#Select Learnable Image Size (this has big VRAM显存 implications!):
 #Note: We use implicit neural representations for better image quality
 #They're previously used in our paper "TRITON: Neural Neural Textures make Sim2Real Consistent" (see tritonpaper.github.io)
 # ... and that representation is based on Fourier Feature Networks (see bmild.github.io/fourfeat)
@@ -140,8 +140,6 @@ learnable_image_b = lambda: rp.apply_uv_map(image(), uv_map_b)
 
 optim=torch.optim.SGD(image.parameters(),lr=1e-4)
 
-
-
 labels=[label_a,label_b]
 learnable_images=[learnable_image_a,learnable_image_b]
 
@@ -157,7 +155,6 @@ weights=weights*len(weights)
 
 #For saving a timelapse
 ims=[]
-
 
 def get_display_image():
     return rp.tiled_images(
@@ -236,4 +233,18 @@ except KeyboardInterrupt:
     im = get_display_image()
     ims.append(im)
     rp.display_image(im)
-# 最好选择一个比较合适的储存im的办法，现在这个display会显示在终端，.py文件的终端太丑陋了。。。
+
+
+
+def save_run(name):
+    folder="/output: %s"%name
+    if rp.path_exists(folder):
+        folder+='_%i'%time.time()
+    rp.make_directory(folder)
+    ims_names=['ims_%04i.png'%i for i in range(len(ims))]
+    with rp.SetCurrentDirectoryTemporarily(folder):
+        rp.save_images(ims,ims_names,show_progress=True)
+    print()
+    print('Saved timelapse to folder:',repr(folder))
+    
+save_run('-'.join([prompt_a,prompt_b])) #You can give it a good custom name if you want!
