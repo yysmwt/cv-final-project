@@ -7,7 +7,7 @@
 ### 1 配置环境
     # 1.1 下载所需要的文件
     # 下载网址（需翻墙）：https://github.com/RyannDaGreat/Diffusion-Illusions
-    # 所需文件: source requirements.txt parker_puzzle_colab.ipynb(opt.)
+    # 所需文件: source/. requirements.txt parker_puzzle_colab.ipynb(opt.)
     # 1.2 python环境
     # 终端输入：
     # pip install --upgrade -r /path/to/requirements.txt
@@ -46,6 +46,8 @@ os.environ["https_proxy"] = "http://127.0.0.1:7890"
     # 解决方案：可以考虑在rp的源文件(一般名为r.py)查找connected_to_internet，将其中的测试网址google.com改成随便一个墙内的，比如我用bing.com
 
 ### 拷贝并运行代码
+
+# prompt
 prompt_a = "A awesome eagle with white head and brown body. Clear eyes and huge wings. Beautiful 3d picture. Flying above the bay."
 prompt_b = "A young man holding a camera with white long lens. Taking photos of mountain in Switzerland. Anime-inspired."
 
