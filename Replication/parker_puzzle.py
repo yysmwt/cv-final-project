@@ -66,7 +66,7 @@ import os
 
 # 添加source文件夹所在路径，确保其中的文件被正确导入
 import sys
-sys.path.append('/root/autodl-tmp/cv-illusion/Diffusion-Illusions-master/source')
+sys.path.append('/root/autodl-tmp/github-cv-final-project/source')
 
 import torch
 import torch.nn as nn

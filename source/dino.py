@@ -5,13 +5,37 @@ from torchvision.transforms.functional import normalize
 from timm.data.constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.models.vision_transformer import vit_base_patch16_224_dino
 
-if "dino_model" not in dir():
+"""
+import os
+os.environ['CURL_CA_BUNDLE'] = ''
+os.environ["http_proxy"] = "http://127.0.0.1:7890"
+os.environ["https_proxy"] = "http://127.0.0.1:7890"
+from huggingface_hub import login
+import subprocess
+
+result = subprocess.run('bash -c "source /etc/network_turbo && env | grep proxy"', shell=True, capture_output=True, text=True)
+output = result.stdout
+for line in output.splitlines():
+    if '=' in line:
+        var, value = line.split('=', 1)
+        os.environ[var] = value
+
+token = "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"
+login(token)
+print("log in successfully.")
+"""
+
+"""if "dino_model" not in dir():
     dino_model = vit_base_patch16_224_dino(pretrained=False)
     state_dict = torch.load('/root/autodl-tmp/cv-illusion/pretrained_model/dino/pytorch_model.bin', weights_only=True)
     dino_model.load_state_dict(state_dict)
     dino_model.eval()
-    print("Model loaded successfully!")
+    print("Model loaded successfully!")"""
 
+if "dino_model" not in dir():
+    dino_model = vit_base_patch16_224_dino(True)
+
+    
 @rp.memoized
 def get_dino_map(image, contrast=4):
     assert rp.is_image(image)
