@@ -4,7 +4,7 @@ from typing import Union, List
 from transformers import AutoProcessor, CLIPModel, CLIPProcessor
 import rp
 
-"""
+
 import os
 os.environ['CURL_CA_BUNDLE'] = ''
 os.environ["http_proxy"] = "http://127.0.0.1:7890"
@@ -22,13 +22,13 @@ for line in output.splitlines():
 token = "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"
 login(token)
 print("log in successfully.")
-"""
+
 # 已经下载好本地模型情况下
-clip_model = CLIPModel.from_pretrained("/root/autodl-tmp/cv-illusion/pretrained_model/clip-vit-base-patch32")
-clip_processor = CLIPProcessor.from_pretrained("/root/autodl-tmp/cv-illusion/pretrained_model/clip-vit-base-patch32")
+#clip_model = CLIPModel.from_pretrained("/root/autodl-tmp/cv-illusion/pretrained_model/clip-vit-base-patch32")
+#clip_processor = CLIPProcessor.from_pretrained("/root/autodl-tmp/cv-illusion/pretrained_model/clip-vit-base-patch32")
 # 需要通过hf下载（需要代理）
-# clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
-# clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
 
 def get_clip_logits(image: Union[torch.Tensor, np.ndarray], prompts: Union[List[str], str]) -> Union[torch.Tensor, np.ndarray]:
