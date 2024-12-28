@@ -5,7 +5,7 @@ from torchvision.transforms.functional import normalize
 from timm.data.constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from timm.models.vision_transformer import vit_base_patch16_224_dino
 
-"""
+
 import os
 os.environ['CURL_CA_BUNDLE'] = ''
 os.environ["http_proxy"] = "http://127.0.0.1:7890"
@@ -23,7 +23,7 @@ for line in output.splitlines():
 token = "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"
 login(token)
 print("log in successfully.")
-"""
+
 
 """if "dino_model" not in dir():
     dino_model = vit_base_patch16_224_dino(pretrained=False)
