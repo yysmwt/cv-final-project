@@ -26,6 +26,7 @@ print('Available example prompts:', ', '.join(example_prompts))
 prompt_a, prompt_b = rp.gather(example_prompts, 'victorial_dress victorial_dress'.split())
 prompt_a, prompt_b = rp.gather(example_prompts, 'pencil_giraffe_head pencil_penguin'.split())
 # prompt_a, prompt_b = rp.gather(example_prompts, 'sailing_ship sailing_ship'.split())
+prompt_a, prompt_b = rp.gather(example_prompts, 'cat dog'.split())
 
 negative_prompt = ''
 
@@ -71,16 +72,54 @@ learnable_image_maker = lambda: LearnableImageFourier(height=256, width=256, hid
 # learnable_image_maker = lambda: LearnableImageFourier(height=512,width=512,num_features=256,hidden_dim=256,scale=20).to(s.device);SIZE=512
 
 image=learnable_image_maker()
-learnable_image_a=lambda: image() #Right-side up
-learnable_image_b=lambda: image().rot90(k=2,dims=[1,2]) #Upside-down
+#learnable_image_a=lambda: image() #Right-side up
+#learnable_image_b=lambda: image().rot90(k=2,dims=[1,2]) #Upside-down
+#新的尝试 主要通过高通和低通滤波器实现远看和近看的不同效果
+def gaussian_filter(image, kernel_size=21, sigma=11.0):
+    """Applies a Gaussian filter to the input image."""
+    device = image.device
+    channels = image.size(0)
+    
+    # Create a 2D Gaussian kernel
+    x = torch.arange(kernel_size, device=device) - kernel_size // 2
+    y = torch.arange(kernel_size, device=device) - kernel_size // 2
+    x_grid, y_grid = torch.meshgrid(x, y, indexing='ij')  # Add `indexing='ij'` to suppress warnings
+    kernel = torch.exp(-(x_grid**2 + y_grid**2) / (2 * sigma**2))
+    kernel = kernel / kernel.sum()
+    kernel = kernel.expand(channels, 1, -1, -1)  # Shape: [C, 1, kernel_size, kernel_size]
+    
+    # Apply the filter to the image
+    image = image.unsqueeze(0)  # Add batch dimension
+    filtered_image = torch.nn.functional.conv2d(image, kernel, padding=kernel_size // 2, groups=channels)
+    return filtered_image.squeeze(0)  # Remove batch dimension
 
+def highpass_filter(image):
+    """Applies a high-pass filter to the input image."""
+    device = image.device
+    channels = image.size(0)
+    
+    # Define a simple high-pass kernel (Laplacian kernel)
+    kernel = torch.tensor([[-1, -1, -1],
+                           [-1,  8, -1],
+                           [-1, -1, -1]], device=device, dtype=torch.float32)
+    kernel = kernel.expand(channels, 1, -1, -1)  # Shape: [C, 1, kernel_size, kernel_size]
+    
+    # Apply the high-pass filter to the image
+    image = image.unsqueeze(0)  # Add batch dimension
+    filtered_image = torch.nn.functional.conv2d(image, kernel, padding=1, groups=channels)
+    return filtered_image.squeeze(0)  # Remove batch dimension
+
+learnable_image_a = lambda: gaussian_filter(image())
+learnable_image_b = lambda: highpass_filter(image())
+'''分割线'''
 optim=torch.optim.SGD(image.parameters(),lr=1e-4)
 
 labels=[label_a,label_b]
 learnable_images=[learnable_image_a,learnable_image_b]
 
 #The weight coefficients for each prompt. For example, if we have [0,1], then only the upside-down mode will be optimized
-weights=[1,1]
+#weights=[1,1]
+weights=[1,10] #高通滤波后的效果不明显，故调大其权重
 
 weights=rp.as_numpy_array(weights)
 weights=weights/weights.sum()
@@ -92,6 +131,7 @@ def get_display_image():
         [
             rp.as_numpy_image(learnable_image_a()),
             rp.as_numpy_image(learnable_image_b()),
+            rp.as_numpy_image(image())
         ],
         length=len(learnable_images),
         border_thickness=0,
