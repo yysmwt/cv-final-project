@@ -23,9 +23,16 @@ token = "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"
 login(token)
 print("log in successfully.")
 
+<<<<<<< HEAD
+
+# 已经下载好本地模型情况下
+# clip_model = CLIPModel.from_pretrained("/root/autodl-tmp/cv-illusion/pretrained_model/clip-vit-base-patch32")
+# clip_processor = CLIPProcessor.from_pretrained("/root/autodl-tmp/cv-illusion/pretrained_model/clip-vit-base-patch32")
+=======
 # 已经下载好本地模型情况下
 #clip_model = CLIPModel.from_pretrained("/root/autodl-tmp/cv-illusion/pretrained_model/clip-vit-base-patch32")
 #clip_processor = CLIPProcessor.from_pretrained("/root/autodl-tmp/cv-illusion/pretrained_model/clip-vit-base-patch32")
+>>>>>>> 066d279389ccbc5a5ccc9cc68c495cc5001dfa6a
 # 需要通过hf下载（需要代理）
 clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
 clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
