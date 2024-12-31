@@ -5,7 +5,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 N = 4
-block = 63
+block = 64
 iter = 0
 def load_image(path):
     image = Image.open(path)
@@ -39,9 +39,10 @@ def swap_triangle(uv,gx,gy,fx,fy,size):
         else:
             iter += 1
             for i in range(size * block):
-                gy_1 = gy * block - i
+                gy_1 = gy * block - i - 1
                 fy_1 = fy * block + i
                 temp = np.copy(uv[gy_1:gy_1 + 1,gx * block - i:gx * block + i + 1,:])
+                print(gy_1,fy_1)
                 uv[gy_1:gy_1 + 1,gx * block - i:gx * block + i + 1,:] = np.copy(uv[fy_1:fy_1 + 1,fx * block - i:fx * block + i + 1,:])
                 uv[fy_1:fy_1 + 1,fx * block - i:fx * block + i + 1,:] = temp
 
@@ -56,10 +57,10 @@ def swap_triangle(uv,gx,gy,fx,fy,size):
             iter += 1
             for i in range(size * block):
                 gy_1 = gy * block - i - 1
-                fy_1 = fy * block - i
-                temp = np.copy(uv[gy_1:gy_1 + 1,gx * block - i:gx * block + i + 2,:])
-                uv[gy_1:gy_1 + 1,gx * block - i:gx * block + i + 2,:] = np.copy(uv[fy_1:fy_1 + 1,fx * block - i:fx * block + i + 2,:])
-                uv[fy_1:fy_1 + 1,fx * block - i:fx * block + i + 2,:] = temp
+                fy_1 = fy * block - i - 1
+                temp = np.copy(uv[gy_1:gy_1 + 1,gx * block - i:gx * block + i + 1,:])
+                uv[gy_1:gy_1 + 1,gx * block - i:gx * block + i + 1,:] = np.copy(uv[fy_1:fy_1 + 1,fx * block - i:fx * block + i + 1,:])
+                uv[fy_1:fy_1 + 1,fx * block - i:fx * block + i + 1,:] = temp
 def swap_triangle_row(uv,gx,gy,fx,fy,size):
     global iter
     if random.choice([True,False]):
@@ -68,10 +69,11 @@ def swap_triangle_row(uv,gx,gy,fx,fy,size):
         else:
             iter += 1
             for i in range(size * block):
-                gx_1 = gx * block - i
+                gx_1 = gx * block - i - 1
                 fx_1 = fx * block + i
                 temp = np.copy(uv[gy * block - i:gy * block + i + 1,gx_1:gx_1 + 1,:])
                 uv[gy * block - i:gy * block + i + 1,gx_1:gx_1 + 1,:] = np.copy(uv[fy * block - i:fy * block + i + 1,fx_1:fx_1 + 1,:])
+                print(gx_1,fx_1)
                 uv[fy * block - i:fy * block + i + 1,fx_1:fx_1 + 1,:] = temp
 
     else:
@@ -84,9 +86,10 @@ def swap_triangle_row(uv,gx,gy,fx,fy,size):
         else:
             iter += 1
             for i in range(size * block):
-                gx_1 = gx * block - i
-                fx_1 = fx * block - i
+                gx_1 = gx * block - i - 1
+                fx_1 = fx * block - i - 1
                 temp = np.copy(uv[gy * block - i:gy * block + i + 1,gx_1:gx_1 + 1,:])
+                print(gx_1, fx_1)
                 uv[gy * block - i:gy * block + i + 1,gx_1:gx_1 + 1,:] = np.copy(uv[fy * block - i:fy * block + i + 1,fx_1:fx_1 + 1,:])
                 uv[fy * block - i:fy * block + i + 1,fx_1:fx_1 + 1,:] = temp
 
@@ -100,7 +103,7 @@ def trans_uv(trans:int=10,unit:int=4):
     :return:
     """
     global iter
-    uv = load_image('output_image.jpg')
+    uv = load_image('uv_map_a.png')
 
     while iter < 2:
         gx = random.randint(0, N - 1)
