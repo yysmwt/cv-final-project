@@ -110,7 +110,7 @@ def highpass_filter(image):
     return filtered_image.squeeze(0)  # Remove batch dimension
 
 learnable_image_a = lambda: gaussian_filter(image())
-learnable_image_b = lambda: highpass_filter(image())
+learnable_image_b = lambda: image()
 '''分割线'''
 optim=torch.optim.SGD(image.parameters(),lr=1e-4)
 
@@ -119,7 +119,7 @@ learnable_images=[learnable_image_a,learnable_image_b]
 
 #The weight coefficients for each prompt. For example, if we have [0,1], then only the upside-down mode will be optimized
 #weights=[1,1]
-weights=[1,10] #高通滤波后的效果不明显，故调大其权重
+weights=[1,1] #高通滤波后的效果不明显，故调大其权重
 
 weights=rp.as_numpy_array(weights)
 weights=weights/weights.sum()
