@@ -68,7 +68,7 @@ import os
 
 # 添加source文件夹所在路径，确保其中的文件被正确导入
 import sys
-sys.path.append('/root/autodl-tmp/cv/cv-final-project')
+sys.path.append('/root/autodl-tmp/cv-final-project')
 
 import torch
 import torch.nn as nn
@@ -92,6 +92,7 @@ for line in output.splitlines():
     if '=' in line:
         var, value = line.split('=', 1)
         os.environ[var] = value
+
 
 token = "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"
 login(token)
@@ -128,7 +129,7 @@ import torch
 import torch.nn.functional as F
 
 #This is the puzzle Matt used in his video!
-uv_map_b = rp.load_image("/root/autodl-tmp/cv/cv-final-project/parker_puzzle_uv_map.png")
+uv_map_b = rp.load_image("/root/autodl-tmp/cv-final-project/improvement1-mask/parker_puzzle_uv_map.png")
 uv_map_a = rp.get_identity_uv_map(*rp.get_image_dimensions(uv_map_b))
 
 

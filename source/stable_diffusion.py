@@ -62,7 +62,7 @@ class StableDiffusion(nn.Module):
                 safety_checker=None,
                 
             )
-        print(1)
+        
         pipe.scheduler = PNDMScheduler(beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear", num_train_timesteps=self.num_train_timesteps) #Error from scheduling_lms_discrete.py
         
         self.pipe         = pipe
