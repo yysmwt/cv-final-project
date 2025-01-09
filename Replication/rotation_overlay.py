@@ -17,7 +17,8 @@ token = "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"
 login(token)
 print("log in successfully.")
 
-
+import sys
+sys.path.append('/root/autodl-tmp/cv-final-project')
 
 import numpy as np
 import rp
@@ -31,7 +32,7 @@ from itertools import chain
 import time
 
 #ONLY GOOD PROMPTS HERE
-example_prompts = rp.load_yaml_file('/root/autodl-tmp/cv-illusion/Diffusion-Illusions-master/source/example_prompts.yaml')
+example_prompts = rp.load_yaml_file('/root/autodl-tmp/cv-final-project/source/example_prompts.yaml')
 print('Available example prompts:', ', '.join(example_prompts))
 
 #These prompts are all strings - you can replace them with whatever you want! By default it lets you choose from example prompts
@@ -197,7 +198,7 @@ except KeyboardInterrupt:
     rp.display_image(im)
 
 def save_run(name):
-    folder="/root/autodl-tmp/cv-illusion/output: %s"%name
+    folder="/root/autodl-tmp/cv-final-project/output-rotation-overlay: %s"%name
     if rp.path_exists(folder):
         folder+='_%i'%time.time()
     rp.make_directory(folder)
