@@ -6,6 +6,7 @@ import numpy as np
 import torch
 from diffusers import ControlNetModel, StableDiffusionControlNetPipeline
 
+# 这里面没有别的路径，只有一个输出路径，就输出到当前文件夹
 # 使用的control net和stable diffusion版本是确定的，一共是20G左右的参数，自动下载自动运行
 
 #这是原始图，直接改成相应图片就行
