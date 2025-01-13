@@ -9,7 +9,6 @@ block = 64
 iter = 0
 def load_image(path):
     image = Image.open(path)
-
     # 转换为 RGB 格式
     rgb_image = image.convert('RGB')
     return np.array(rgb_image)
@@ -103,7 +102,7 @@ def trans_uv(trans:int=10,unit:int=4):
     :return:
     """
     global iter
-    uv = load_image('uv_map_a.png')
+    uv = load_image('improvement1-mask/uv_map_a.png')
 
     while iter < 2:
         gx = random.randint(0, N - 1)
@@ -147,6 +146,6 @@ def trans_uv(trans:int=10,unit:int=4):
     image = Image.fromarray(uv)
 
     image.save('trans_uv.png')
-
+    print('done')
 
 trans_uv()
