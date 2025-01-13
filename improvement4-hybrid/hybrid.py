@@ -26,7 +26,7 @@ print('Available example prompts:', ', '.join(example_prompts))
 prompt_a, prompt_b = rp.gather(example_prompts, 'victorial_dress victorial_dress'.split())
 prompt_a, prompt_b = rp.gather(example_prompts, 'pencil_giraffe_head pencil_penguin'.split())
 # prompt_a, prompt_b = rp.gather(example_prompts, 'sailing_ship sailing_ship'.split())
-prompt_a, prompt_b = rp.gather(example_prompts, 'cat dog'.split())
+prompt_a, prompt_b = rp.gather(example_prompts, 'mushroom miku'.split())
 
 negative_prompt = ''
 
@@ -72,8 +72,25 @@ learnable_image_maker = lambda: LearnableImageFourier(height=256, width=256, hid
 # learnable_image_maker = lambda: LearnableImageFourier(height=512,width=512,num_features=256,hidden_dim=256,scale=20).to(s.device);SIZE=512
 
 image=learnable_image_maker()
-learnable_image_a = lambda: image() #Right-side up
-learnable_image_b = lambda: image().rot90(k=2,dims=[1,2]) #Upside-down
+#learnable_image_a=lambda: image() #Right-side up
+#learnable_image_b=lambda: image().rot90(k=2,dims=[1,2]) #Upside-down
+#新的尝试 主要通过高通和低通滤波器实现远看和近看的不同效果
+def gaussian_filter(image, kernel_size=7, sigma=3.0):
+    """Applies a Gaussian filter to the input image."""
+    device = image.device
+    channels = image.size(0)
+    x = torch.arange(kernel_size, device=device) - kernel_size // 2
+    y = torch.arange(kernel_size, device=device) - kernel_size // 2
+    x_grid, y_grid = torch.meshgrid(x, y, indexing='ij')
+    kernel = torch.exp(-(x_grid**2 + y_grid**2) / (2 * sigma**2))
+    kernel = kernel / kernel.sum()
+    kernel = kernel.expand(channels, 1, -1, -1)
+    image = image.unsqueeze(0)
+    filtered_image = torch.nn.functional.conv2d(image, kernel, padding=kernel_size // 2, groups=channels)
+    return filtered_image.squeeze(0)
+
+learnable_image_a = lambda: gaussian_filter(image())
+learnable_image_b = lambda: image()
 '''分割线'''
 optim=torch.optim.SGD(image.parameters(),lr=1e-4)
 
@@ -162,7 +179,7 @@ rp.display_image(rp.as_numpy_image(learnable_image_a()))
 print('Upside-down image:')
 rp.display_image(rp.as_numpy_image(learnable_image_b()))
 def save_run(name):
-    folder="untracked/flippy_illusion_runs/%s"%name
+    folder="/root/autodl-tmp/cv-final-project/output-hybrid: %s"%name
     if rp.path_exists(folder):
         folder+='_%i'%time.time()
     rp.make_directory(folder)
