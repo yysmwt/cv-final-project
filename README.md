@@ -20,6 +20,9 @@ https://fancy-icebreaker-99b.notion.site/Creating-Visual-Cognitive-Illusions-158
     - 以上全部完成之后可能会面临rp库的一些问题，这是因为autodl提供的代理仅限github和huggingface，而rp库中从初始化就会有一些访问google.com的操作，这会导致网络错误，我们考虑在rp的源文件(一般名为r.py)查找connected_to_internet，将其中的测试网址google.com改成bing.com即可解决
 - 参数设置：预训练模型下载
     - 所有的预训练模型下载均在代码中显式地使用diffusers库完成，如果可以正常访问hf即可进行，本模型使用了Stable Diffusion模型，以及Control Net模型。预计模型大小一共在20 ~ 30G之间，请提前预留好空间。
+- 路径依赖：为了正确的调用source文件夹中的内容，我们在除了main.py以外的文件中均手动添加了搜索路径如下：
+    - sys.path.append('/root/autodl-tmp/cv-final-project')
+    - 如果学长或老师希望运行此代码，可能需要麻烦您修改此处路径为您的cv-final-project文件夹路径
 
 # Step Tutorial 2: GUI工具调用
 为了更加简明快捷舒适清爽地生成对应的图片，我们的项目另外开发了一个GUI工具，可以方便地生成各种类型的幻觉图片。下面介绍如何部署并且运行。
