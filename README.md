@@ -1,5 +1,6 @@
 # cv-final-project
-这是计算机视觉课程大作业的项目代码。
+尊敬的老师，助教学长您好！
+这是计算机视觉课程大作业的项目代码仓库，辛苦您查阅。
 
 # 项目要求
 https://fancy-icebreaker-99b.notion.site/Creating-Visual-Cognitive-Illusions-158d8be58af48070b7bee41d7e6ea75d
