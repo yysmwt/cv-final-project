@@ -7,6 +7,11 @@ https://fancy-icebreaker-99b.notion.site/Creating-Visual-Cognitive-Illusions-158
 # code base
 本项目基于开源代码库Diffusion Illusions实现，github链接为 https://github.com/RyannDaGreat/Diffusion-Illusions.
 
-## improvement1:mask
-目前效果不是特别特别理想，但是基本功能实现了，简单来说：不搞别的，直接根据形状两两交换，控制交换的量实际上效果等价于对这个图进行拆分。具体原理我待会画一个图。
-这一部分的报告我过一会来写，可以讲技术细节，比较几种方法的优劣，反正编口水话我挺在行的。
+# Step Tutorial
+由于我们的项目另外开发了一个GUI工具，可以方便地生成各种类型的幻觉图片。下面介绍如何部署并且运行。
+1. 克隆项目：
+'''
+git clone https://github.com/yysmwt/cv-final-project.git
+'''
+2. 运行main.py。
+3. 控制台中会出现一个本地链接，在浏览器中打开链接，即可通过我们开发的可视化工具进行幻觉图片生成。
