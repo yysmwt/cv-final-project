@@ -93,7 +93,7 @@ def generate_parker_puzzle(prompt_a, prompt_b, negative_prompt='', progress=0, n
     generating_flag = True
 
     try:
-        for iter_num in range(num_iter):
+        for iter_num in range(num_iter+1):
             if not generating_flag:
                 break
             preds = []
@@ -302,7 +302,7 @@ def generate_random_puzzle(prompt_a, prompt_b, negative_prompt='', progress=0, n
     generating_flag = True
 
     try:
-        for iter_num in range(num_iter):
+        for iter_num in range(num_iter+1):
             if not generating_flag:
                 break
             preds = []
@@ -411,7 +411,7 @@ def generate_original_rotation(prompt1, prompt2, prompt3, prompt4, prompt5='', p
     generating_flag = True
 
     try:
-        for iter_num in range(num_iter):
+        for iter_num in range(num_iter+1):
             if not generating_flag:
                 break
             preds = []
@@ -542,7 +542,7 @@ def generate_8_rotation(prompt_w, prompt_x, prompt_y, prompt_z,prompt_a,prompt_b
     generating_flag = True
 
     try:
-        for iter_num in range(num_iter):
+        for iter_num in range(num_iter+1):
             if not generating_flag:
                 break
             preds = []
@@ -653,7 +653,7 @@ def generate_QR_highteracc(qr_content, prompt_a, prompt_b, prompt_z, negative_pr
     generating_flag = True
 
     try:
-        for iter_num in range(num_iter):
+        for iter_num in range(num_iter+1):
             if not generating_flag:
                 break
             preds = []
@@ -775,7 +775,7 @@ def generate_QR_higherquality(qr_content, prompt_a, prompt_b, prompt_z, negative
     generating_flag = True
 
     try:
-        for iter_num in range(num_iter):
+        for iter_num in range(num_iter+1):
             if not generating_flag:
                 break
             preds = []
@@ -876,7 +876,7 @@ def generate_RGB(prompt_a, prompt_b,prompt_c,prompt_d, negative_prompt='', progr
     generating_flag = True
 
     try:
-        for iter_num in range(num_iter):
+        for iter_num in range(num_iter+1):
             if not generating_flag:
                 break
             preds = []
@@ -967,7 +967,7 @@ def generate_hybrid(prompt_a, prompt_b, kernel_size, negative_prompt='', progres
     generating_flag = True
 
     try:
-        for iter_num in range(num_iter):
+        for iter_num in range(num_iter+1):
             if not generating_flag:
                 break
             preds = []
