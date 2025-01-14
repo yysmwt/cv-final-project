@@ -15,3 +15,6 @@ git clone https://github.com/yysmwt/cv-final-project.git
 '''
 2. 运行main.py。
 3. 控制台中会出现一个本地链接，在浏览器中打开链接，即可通过我们开发的可视化工具进行幻觉图片生成。
+
+## Notice
+本模型使用了Stable Diffusion模型，以及Control Net模型。预计模型大小一共在20 ~ 30G之间，请提前预留好空间。
