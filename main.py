@@ -1203,7 +1203,6 @@ with gr.Blocks() as app:
             gr.Markdown("### 图像变换")
             btn1_1 = gr.Button("1. Generate Parker Puzzle (original)")
             btn1_2 = gr.Button("2. Generate Random Puzzle (Improvement 1.1)")
-            btn1_3 = gr.Button("3. Generate Non-Rectangle Puzzle (Improvement 1.2) （待完善）")
             btn01_back = gr.Button("返回主菜单")
     # 子选项1-1生成页面
     with gr.Row(visible=False) as generate_page_option1:

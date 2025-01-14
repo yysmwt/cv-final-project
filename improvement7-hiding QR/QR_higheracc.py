@@ -39,13 +39,12 @@ from amzqr import amzqr
 import qrcode
 
 
-example_prompts = rp.load_yaml_file('improvement-prompt/example_prompt.yaml')
+example_prompts = rp.load_yaml_file('source/example_prompts.yaml')
 print('Available example prompts:', ', '.join(example_prompts))
 
 prompt_a, prompt_b, prompt_z = rp.gather(example_prompts, 'froggo lipstick gold_coins'.split())
 
 negative_prompt = ''
-
 
 model_id = "CompVis/stable-diffusion-v1-4"
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -63,27 +62,27 @@ background_path = output_path_1
 output_path = "improvement7-hiding QR/QR-outputs"
 output_file = f"{output_path}/custom_qrcode.png"
 
-amzqr.run(
-    words=qr_content,
-    picture=background_path,
-    level='H', 
-    version = 5, 
-    colorized=True,
-    save_name="custom_qrcode.png",
-    save_dir=output_path,
-)
+def generate_qr_code(content, size=256):
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_H,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(content)
+    qr.make(fit=True)
 
-def read_and_convert_image_to_tensor(image_path):
-    image = Image.open(image_path).convert("RGB")
-    transform = transforms.Compose([
+    qr_image = qr.make_image(fill_color="black", back_color="white").convert("L")
+    qr_image = qr_image.resize((size, size), Image.Resampling.NEAREST)
+    return qr_image
+
+qrcode = generate_qr_code(qr_content, size=256)
+transform = transforms.Compose([
         transforms.Resize((256, 256)),
         transforms.ToTensor()
     ])
-    return transform(image).to('cuda')
 
-qrcode = read_and_convert_image_to_tensor(output_file)
-
-print(f"二维码生成完成，保存路径：{output_path}/custom_qrcode.png")
+qrcode = transform(qrcode).to('cuda')
 
 def fade_tensor_image(tensor_image, alpha=0.5, target_value=1.0):
     if tensor_image.dtype != torch.float32:
@@ -95,7 +94,7 @@ def fade_tensor_image(tensor_image, alpha=0.5, target_value=1.0):
     faded_image = alpha * tensor_image + (1 - alpha) * target_value
     return faded_image
 
-qrcode = fade_tensor_image(qrcode, alpha=0.5, target_value=1.0)
+qrcode = fade_tensor_image(qrcode, alpha=0.3, target_value=1.0)
 
 if 's' not in dir():
     model_name="CompVis/stable-diffusion-v1-4"
@@ -113,7 +112,7 @@ image_b=learnable_image_maker()
 k = 1
 learnable_image_a=lambda: k * image_a()
 learnable_image_b=lambda: k * image_b()
-learnable_image_z=lambda: (3 * qrcode - image_a() - image_b())
+learnable_image_z=lambda: (qrcode - (image_a()+image_b())/2)
 
 params = chain(
     image_a.parameters(),
@@ -124,7 +123,7 @@ labels=[label_a, label_b, label_z]
 learnable_images=[learnable_image_a,learnable_image_b,learnable_image_z]
 
 
-weights=[1,1,6]
+weights=[1,1,7]
 
 
 weights=rp.as_numpy_array(weights)
@@ -136,7 +135,7 @@ def get_display_image():
     return rp.tiled_images(
         [
             *[rp.as_numpy_image(image()) for image in learnable_images],
-            rp.as_numpy_image((learnable_image_a()+learnable_image_b()+learnable_image_z())/3),
+            rp.as_numpy_image((learnable_image_a()/2+learnable_image_b()/2+learnable_image_z())),
         ],
         length=len(learnable_images),
         border_thickness=0,
